@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>❤️ You won my heart ❤️</title>
+    <style>
+      body {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        background-color: #222;
+      }
+      table {
+        border-collapse: collapse;
+      }
+      tbody td {
+        border: 1px solid #555;
+        font-size: 2em;
+        text-align: center;
+        min-width: 33.33%; /* Equal width for each cell */
+        height: 2em;
+        width: 2em;
+      }
+      tfoot td {
+        font-family: Gordita, Helvetica Neue, Helvetica, Arial, sans-serif;
+        padding: 1.5em 0.1em;
+        font-size: 1.1em;
+        color: red;
+        text-align: center;
+      }
+      table tr:nth-child(1) td {
+        border-top: 0px;
+      }
+      table tr:nth-child(3) td {
+        border-bottom: 0px;
+      }
+      table tr td:nth-child(1) {
+        border-left: 0px;
+      }
+      table tr td:nth-child(3) {
+        border-right: 0px;
+      }
+      table tfoot td {
+        border: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <table>
+      <tbody>
+        <tr>
+          <td id="a1"></td>
+          <td id="a2"></td>
+          <td id="a3"></td>
+        </tr>
+        <tr>
+          <td id="b1"></td>
+          <td id="b2"></td>
+          <td id="b3"></td>
+        </tr>
+        <tr>
+          <td id="c1"></td>
+          <td id="c2"></td>
+          <td id="c3"></td>
+        </tr>
+        <!-- Add more rows as needed -->
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" id="info-board"></td>
+        </tr>
+      </tfoot>
+    </table>
+    <script>
+      const heartEmoji = "❤️";
+      const crossEmoji = "❌";
+      const infoBoard = document.getElementById("info-board");
+      const cellElementMap = {
+        a1: document.getElementById("a1"),
+        a3: document.getElementById("a3"),
+        b1: document.getElementById("b1"),
+        b2: document.getElementById("b2"),
+        c1: document.getElementById("c1"),
+        c3: document.getElementById("c3"),
+      };
+      const gameEvents = [
+        { infoText: "Game starts", color: "yellow" },
+        { cell: "b1", value: crossEmoji },
+        { infoText: "Emil's turn", color: "white" },
+        { cell: "a1", value: heartEmoji },
+        { infoText: "Shajan's turn" },
+        { cell: "a3", value: crossEmoji },
+        { infoText: "Emil's turn" },
+        { cell: "b2", value: heartEmoji },
+        { infoText: "Shajan's turn" },
+        { cell: "c1", value: crossEmoji },
+        { infoText: "Emil's turn" },
+        { cell: "c3", value: heartEmoji },
+        { infoText: "YOU WON MY HEART", color: "red" },
+      ];
+
+      function setInfoBaord(text, color) {
+        infoBoard.innerText = text;
+        if (color) {
+          infoBoard.style.color = color;
+        }
+      }
+
+      async function init() {
+        for (const event of gameEvents) {
+          await sleep(500);
+
+          if (event.infoText) {
+            setInfoBaord(event.infoText, event.color);
+          }
+
+          if (event.cell) {
+            setCellValue(event.cell, event.value);
+          }
+        }
+      }
+
+      function setCellValue(cell, value) {
+        cellElementMap[cell].innerText = value;
+      }
+
+      async function sleep(ms) {
+        return new Promise((resolve) => {
+          setTimeout(resolve, ms);
+        });
+      }
+
+      (async () => {
+        await init();
+      })();
+    </script>
+  </body>
+</html>
